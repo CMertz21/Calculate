@@ -4,6 +4,7 @@
  * Date: 4/17/18
  * Purpose: Build GUI/Main/constructors to build the GUI for Project 3
  */
+
 package project;
 
 
@@ -12,15 +13,18 @@ package project;
 	 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
  
-public class BuildGUI {
+public class BuildGUI implements ActionListener {
 	public static JRadioButton iterative = new JRadioButton("Iterative   ");
     public static JRadioButton recursive = new JRadioButton("Recursive");
     public static JTextArea writeEnter = new JTextArea ("Enter n : \t");
@@ -30,9 +34,10 @@ public class BuildGUI {
     public static JTextField result = new JTextField(10);
     public static JTextArea writeEfficiency = new JTextArea("Efficiency: \t");
     public static JTextField efficiency = new JTextField(10);
+    public int userEntry;
     
  
-    public static void addComponentsToPane(Container pane) {
+    public void addComponentsToPane(Container pane)  {
     	
     pane.setLayout(new GridBagLayout());
     pane.setBackground(Color.WHITE);
@@ -45,7 +50,8 @@ public class BuildGUI {
     rb.weightx =0.5;
     rb.gridx=3;
     rb.gridy=0;
-    //rb.anchor=GridBagConstraints.FIRST_LINE_END;
+    iterative.setSelected(true);
+    
     pane.add(iterative,rb);
     rb.gridx=3;
     rb.gridy=1;
@@ -63,14 +69,16 @@ public class BuildGUI {
     tEnt.gridx=2;
     tEnt.gridwidth=2;
     tEnt.gridy=2;
+    enter.addActionListener(this);
     pane.add(enter, tEnt);
-    
+    //COmpute Button
     GridBagConstraints btn = new GridBagConstraints();
     btn.weightx=0.5;
     btn.gridx=3;
     btn.gridy=3;
+    comp.addActionListener(this);
     pane.add(comp, btn);
-    
+    //Text for Result
     GridBagConstraints res = new GridBagConstraints();
     res.weightx=0.5;
     res.gridx=0;
@@ -82,8 +90,9 @@ public class BuildGUI {
     tRes.gridx=2;
     tRes.gridwidth=2;
     tRes.gridy=4;
+    result.setEditable(false);
     pane.add(result, tRes);
-    
+    //Text for Efficiency
     GridBagConstraints eff = new GridBagConstraints();
     eff.weightx=0.5;
     eff.gridx=0;
@@ -95,15 +104,35 @@ public class BuildGUI {
     tEff.gridx=2;
     tEff.gridwidth=2;
     tEff.gridy=5;
+    efficiency.setEditable(false);
     pane.add(efficiency, tEff);
     
-    
-    
-    
-    
     }//end addComponents
-      
-    private static void createAndShowGUI() {
+    
+    public void actionPerformed(ActionEvent evt) {
+    	//Ensure that the entry is only integers
+    	String text = enter.getText();
+    	try {
+    	userEntry = Integer.parseInt(text);   //tries to convert to int-- used to check if entry is numeric		
+    	
+    	}catch(NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Please enter only integers");
+    		
+    	}catch (NullPointerException e) {
+    		JOptionPane.showMessageDialog(null, "Error: Please make your entry again");
+    	}
+    	//If Iterative is selected
+    	if(iterative.isSelected()) {
+    		//TODO -- run script from 2nd class to do this
+    		JOptionPane.showMessageDialog(null, "Interative is selected");
+    	}
+    	//If recursive is selected
+    	if(recursive.isSelected()) {
+    		//TODO -- run script from 2nd class to do this
+    		JOptionPane.showMessageDialog(null, "Recursive is selected");
+    	}
+    }
+    private void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Project 3");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,7 +150,9 @@ public class BuildGUI {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+            	BuildGUI gui = new BuildGUI();
+            	
+                gui.createAndShowGUI();
             }
         });
     }
