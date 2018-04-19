@@ -1,0 +1,24 @@
+
+public class math {
+	public static int j=0;
+	public static int math2(int n) {
+		j++;
+		if (n==0) {
+			return 0;
+		}else if (n==1){
+			return 1;
+		}else {
+			return 2*(math2(n-1))+math2(n-2);
+		}
+	}
+ 
+	public static void main(String[] args) {
+	int i=0;
+	while(i<10) {
+		System.out.println(i +": " + math2(i)+ " j: " + j);
+		i++;
+	}
+
+	}
+
+}
