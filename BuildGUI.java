@@ -12,9 +12,14 @@ package project;
 
 	 
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -123,19 +128,39 @@ public class BuildGUI implements ActionListener {
     	}
     	//If Iterative is selected
     	if(iterative.isSelected()) {
-    		//TODO -- run script from 2nd class to do this
-    		JOptionPane.showMessageDialog(null, "Interative is selected");
+    		String compNum1 = String.valueOf(Sequence.computeIterative(userEntry));
+    		result.setText(compNum1);
+    		String compEff1 = String.valueOf(Sequence.getEfficiency());
+    		efficiency.setText(compEff1);
+    	
+    		
     	}
     	//If recursive is selected
     	if(recursive.isSelected()) {
-    		//TODO -- run script from 2nd class to do this
-    		JOptionPane.showMessageDialog(null, "Recursive is selected");
+    		String compNum2 = String.valueOf(Sequence.computeRecursive(userEntry));
+    		result.setText(compNum2);
+    		String compEff2 = String.valueOf(Sequence.getEfficiency());
+    		efficiency.setText(compEff2);
     	}
     }
+    
+    
+    
     private void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Project 3");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        //Make a file on closing the window
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        	frame.addWindowListener(new WindowAdapter(){
+        		public void windowClosing(WindowEvent e) {
+        			for (i=0;i<10;i++) {
+        				Sequence.computeIterative(i)
+        			}
+        		e.getWindow().dispose();
+        		System.out.println("frame closed"); //test 
+        		}
+        	});
  
         //Set up the content pane.
         addComponentsToPane(frame.getContentPane());
