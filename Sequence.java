@@ -6,7 +6,7 @@
  *
  */
 
-
+package project;
 
 public final class Sequence {
 	private static  int j=0;
@@ -45,11 +45,27 @@ public final class Sequence {
 		
 	}
 	//calculates efficiency of each method
-	public static int getEfficiency () {
+	public static int getEfficiency (int i) {
+		if (i==0) {
 		int efficiency = j;
 		j=0; //resets j after each reading
 		return efficiency;
 	}
-	
-	
+		//computes the efficiency of n = 0-10 on exit and stores in array
+		if (i==2) {
+			for (int e=0;e<11;e++) {
+				//Iterative results
+				computeIterative(e);
+				BuildGUI.results[0][e]=String.valueOf(getEfficiency(0));
+				//Recursive results
+				computeRecursive(e);
+				BuildGUI.results[1][e]=String.valueOf(getEfficiency(0));
+			}
+			
+		}
+		return 0;
+		}
 	 }
+	
+	
+
