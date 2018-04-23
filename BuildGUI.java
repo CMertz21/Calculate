@@ -5,7 +5,7 @@
  * Purpose: Build GUI/Main/constructors to build the GUI for Project 3
  */
 
-package project;
+
 
 
 
@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -40,6 +42,12 @@ public class BuildGUI implements ActionListener {
     public static JTextArea writeEfficiency = new JTextArea("Efficiency: \t");
     public static JTextField efficiency = new JTextField(10);
     public int userEntry;
+    
+    //Delimiter used in CSV file
+   private static List<String> list = new ArrayList<String>();
+    private static final String COMMA_DELIMITER = ",";
+    private static final String NEW_LINE_SEPARATOR = "\n";  
+    private static final String FILEPATH = "C:\\Users\\Carrie\\Desktop\\results.csv" ;
     
  
     public void addComponentsToPane(Container pane)  {
@@ -143,24 +151,40 @@ public class BuildGUI implements ActionListener {
     		efficiency.setText(compEff2);
     	}
     }
+
     
+    //write to file 
+    private void writeToFile(String s) {  
+    	//TODO make file writer
+    	
+    	
+    }
     
-    
-    private void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Project 3");
-        
+    //method to close the window
+    private void closeWindow(JFrame f) {
+    	
+    	
+    	  
         //Make a file on closing the window
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        	frame.addWindowListener(new WindowAdapter(){
+        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);//TODO work on file writer
+        	f.addWindowListener(new WindowAdapter(){
         		public void windowClosing(WindowEvent e) {
-        			for (i=0;i<10;i++) {
-        				Sequence.computeIterative(i)
+        			for (int i=0;i<10;i++) {
+        				Sequence.computeIterative(i);
+        				String enterThis = String.valueOf(Sequence.getEfficiency());
+        				list.add(enterThis);
         			}
         		e.getWindow().dispose();
         		System.out.println("frame closed"); //test 
         		}
         	});
+    }
+    
+    private void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("Project 3");
+        closeWindow(frame); //Write the file 
+       
  
         //Set up the content pane.
         addComponentsToPane(frame.getContentPane());
